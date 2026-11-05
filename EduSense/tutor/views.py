@@ -444,9 +444,10 @@ class OllamaGenerateView(APIView):
                 ollamaLogger.warning(f"[OllamaGenerate] Assignment ID: {assignment_id} not found. Using default or provided model.")
                 pass
 
-            if not ollamaModel:
-                ollamaModel = OLLAMA_DEFAULT_MODEL
-                ollamaLogger.info(f"[OllamaGenerate] No model specified. Using default model: {OLLAMA_DEFAULT_MODEL}")
+        # fall back to the default model even when no assignment is selected
+        if not ollamaModel:
+            ollamaModel = OLLAMA_DEFAULT_MODEL
+            ollamaLogger.info(f"[OllamaGenerate] No model specified. Using default model: {OLLAMA_DEFAULT_MODEL}")
 
         # prepares payload for the Ollama server
         ollamaPayload = {
